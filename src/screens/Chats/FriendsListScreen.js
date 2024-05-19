@@ -1,23 +1,43 @@
 // src/FriendsListScreen.js
 import React from 'react';
-import { View, FlatList, TouchableOpacity, Text, Image, StyleSheet } from 'react-native';
+import {
+  View,
+  FlatList,
+  TouchableOpacity,
+  Text,
+  Image,
+  StyleSheet,
+} from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
+import uuid from 'react-native-uuid';
 
-const FriendsListScreen = ({ navigation }) => {
+const FriendsListScreen = ({navigation}) => {
   const friends = [
-    { id: 1, name: 'Friend 1', image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/3/3a/Cat03.jpg/1025px-Cat03.jpg' },
-    { id: 2, name: 'Friend 2', image: 'https://placekitten.com/50/51' },
-    { id: 3, name: 'Friend 3', image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTwiJ2OMwkdSSGf3DWJKQl_dqxNabrKZMoaFNw2L0u7ykukSTrTFclxS1mp03McOYTlm9k&usqp=CAU' },
+    {
+      id: uuid.v4(),
+      name: 'Friend 1',
+      image:
+        'https://upload.wikimedia.org/wikipedia/commons/thumb/3/3a/Cat03.jpg/1025px-Cat03.jpg',
+    },
+    {id: uuid.v4(), name: 'Friend 2', image: 'https://placekitten.com/50/51'},
+    {
+      id: uuid.v4(),
+      name: 'Friend 3',
+      image:
+        'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTwiJ2OMwkdSSGf3DWJKQl_dqxNabrKZMoaFNw2L0u7ykukSTrTFclxS1mp03McOYTlm9k&usqp=CAU',
+    },
     // Add more friends as needed
   ];
 
-  const navigateToChat = (friend) => {
-    navigation.navigate('Chat', { friend });
+  const navigateToChat = friend => {
+    navigation.navigate('Chat', {friend});
   };
 
-  const renderFriend = ({ item }) => (
-    <TouchableOpacity style={styles.friendItem} onPress={() => navigateToChat(item)}>
-      <Image source={{ uri: item.image }} style={styles.friendImage} />
+  const renderFriend = ({item}) => (
+    <TouchableOpacity
+      style={styles.friendItem}
+      onPress={() => navigateToChat(item)}>
+      <Image source={{uri: item.image}} style={styles.friendImage} />
       <View style={styles.friendInfo}>
         <Text style={styles.friendName}>{item.name}</Text>
         <Text style={styles.lastMessageTime}>{getLastMessageTime()} ago</Text>
@@ -38,7 +58,7 @@ const FriendsListScreen = ({ navigation }) => {
       </View>
       <FlatList
         data={friends}
-        keyExtractor={(item) => item.id.toString()}
+        keyExtractor={item => item.id.toString()}
         renderItem={renderFriend}
       />
       <TouchableOpacity style={styles.chatIcon}>
